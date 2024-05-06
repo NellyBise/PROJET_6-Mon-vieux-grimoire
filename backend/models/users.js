@@ -15,14 +15,22 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    minLength: 6,
     required: true,
-    validate: {
-      validator: function (value) {
-        return /^[^<>@=]*$/.test(value);
+    validate: [
+      {
+        validator: function (value) {
+          return value && value.length >= 6;
+        },
+        message: 'Le mot de passe doit contenir au moins 6 caractères',
       },
-      message: 'Le mot de passe ne peut pas contenir les caractères < > @ et =',
-    },
+      {
+        validator: function (value) {
+          return /^[^<>@=]*$/.test(value);
+        },
+        message:
+          'Le mot de passe ne peut pas contenir les caractères < > @ et =',
+      },
+    ],
   },
 });
 
