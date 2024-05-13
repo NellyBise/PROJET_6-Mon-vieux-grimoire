@@ -16,14 +16,4 @@ const bookSchema = mongoose.Schema({
   averageRating: { type: Number, required: true },
 });
 
-bookSchema.pre('save', function (next) {
-  const fieldsToFormat = ['title', 'author', 'genre'];
-  fieldsToFormat.forEach((field) => {
-    if (this[field] && typeof this[field] === 'string') {
-      this[field] = this[field].replace(/[<>!=@]/g, ' ');
-    }
-  });
-  next();
-});
-
 module.exports = mongoose.model('Book', bookSchema);
